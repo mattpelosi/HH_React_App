@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Google";
+  src: local("SourceSerifPro-Regular") local("SourceSerifPro-Semibold")
+    local("SourceSerifPro-Bold") format("woff2");
+}
+
+.App {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: 1fr repeat(4, 1fr);
+}

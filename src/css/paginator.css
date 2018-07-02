@@ -1,0 +1,38 @@
+.paginator {
+    position: relative;
+    top: 1em;
+    background: rgb(255, 255, 255);
+    width: 200px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .page-item {
+    list-style: none;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .page-item:last-child {
+    border-right: none;
+  }
+  
+  .page-item.active {
+    opacity: 1;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+  
+  .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+  }

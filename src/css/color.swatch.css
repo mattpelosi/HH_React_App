@@ -1,0 +1,57 @@
+.swatch-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #bfc6c6;
+  color: rgb(132, 118, 118);
+}
+
+.swatch-container.selected {
+  border: 2px solid rgb(117, 107, 107);
+}
+
+.color-swatch {
+  height: 75%;
+  background: black;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+}
+
+.color-data {
+  height: 25%;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Google";
+}
+
+.color-label {
+  display: flex;
+  left: 1em;
+  margin: 0;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 15px !important;
+}
+
+.color-lightness {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  width: 50%;
+  justify-content: flex-end;
+}
+
+@media only screen and (max-width: 664px) {
+  .color-label {
+    font-size: 10px !important;
+  }
+  .color-lightness {
+    font-size: 10px;
+  }
+}

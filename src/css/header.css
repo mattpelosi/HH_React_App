@@ -1,0 +1,18 @@
+.header {
+  display: grid;
+  grid-template-columns: 250px 3fr 2fr;
+  background: #363c3c;
+  grid-column: 1 / -1;
+  padding-left: 5%;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 5%;
+}
+
+.logo {
+  height: 40px;
+}
