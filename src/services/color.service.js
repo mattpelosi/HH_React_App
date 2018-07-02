@@ -5,7 +5,7 @@ export function read() {
     method: "GET",
     headers: {}
   };
-  return axiosInstance(`https://young-savannah-71739.herokuapp.com/colors` || 'http://localhost:3001/colors', config)
+  return axiosInstance(`https://young-savannah-71739.herokuapp.com/colors`, config)
     .then(responseSuccessHandler)
     .catch(responseErrorHandler);
 }

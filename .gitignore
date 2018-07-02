@@ -23,3 +23,6 @@ yarn-error.log*
 
 # VSCode
 .vscode/*
+
+# server
+/sf.code/helpful-human-new-clone/Helpful_Human_Interview_Challenge/server
