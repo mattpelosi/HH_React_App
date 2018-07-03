@@ -22,14 +22,6 @@ class ContentWrapper extends React.Component {
       detailList: [],
       loading: true
     };
-
-    this.generateRandomColors = this.generateRandomColors.bind(this);
-    this.onPageChange = this.onPageChange.bind(this);
-    this.shuffleColorsArray = this.shuffleColorsArray.bind(this);
-    this.selectDetailView = this.selectDetailView.bind(this);
-    this.clearDetailView = this.clearDetailView.bind(this);
-    this.returnColorGroup = this.returnColorGroup.bind(this);
-    this.ArrayFromObj = this.ArrayFromObj.bind(this);
   }
 
   async componentDidMount() {
@@ -51,16 +43,15 @@ class ContentWrapper extends React.Component {
     }
   }
 
-  generateRandomColors() {
+  generateRandomColors = () => {
     const colors = JSON.parse(JSON.stringify(this.state.allColorsObj));
-    // delete colors._id;
     let hexCodeArr = this.ArrayFromObj(colors);
     hexCodeArr = this.shuffleColorsArray(hexCodeArr);
     this.setState({ allColorsArr: hexCodeArr });
     this.props.addColorIndex(hexCodeArr);
-  }
+  };
 
-  ArrayFromObj(obj) {
+  ArrayFromObj = obj => {
     let arr = [];
     for (let color in obj) {
       for (let i = 0; i < obj[color].length; i++) {
@@ -68,9 +59,9 @@ class ContentWrapper extends React.Component {
       }
     }
     return arr;
-  }
+  };
 
-  shuffleColorsArray(arr) {
+  shuffleColorsArray = arr => {
     //Fisher-Yates shuffle
     let m = arr.length,
       t,
@@ -84,9 +75,9 @@ class ContentWrapper extends React.Component {
     }
 
     return arr;
-  }
+  };
 
-  onPageChange(data) {
+  onPageChange = data => {
     const offset = (data.currentPage - 1) * data.pageLimit;
     const currentColors = this.state.allColorsArr.slice(
       offset,
@@ -98,9 +89,9 @@ class ContentWrapper extends React.Component {
       currentColors: currentColors,
       totalPages: data.totalPages
     });
-  }
+  };
 
-  returnColorGroup(color) {
+  returnColorGroup = color => {
     const obj = this.state.allColorsObj;
     let group = {};
     for (let prop in obj) {
@@ -112,9 +103,9 @@ class ContentWrapper extends React.Component {
       }
     }
     return group;
-  }
+  };
 
-  selectDetailView(color) {
+  selectDetailView = color => {
     const detailList = this.returnColorGroup(color);
 
     this.setState({
@@ -122,20 +113,28 @@ class ContentWrapper extends React.Component {
       detailColor: color,
       detailList: detailList
     });
-  }
+  };
 
-  clearDetailView() {
+  clearDetailView = () => {
     this.setState({
       detailView: false,
       detailColor: ""
     });
-  }
+  };
 
   render() {
-    
+    const {
+      loading,
+      allColorsArr,
+      detailView,
+      currentColors,
+      detailColor,
+      detailList
+    } = this.state;
+
     return (
       <React.Fragment>
-        {this.state.loading || this.state.allColorsArr.length === 0 ? (
+        {loading || allColorsArr.length === 0 ? (
           <React.Fragment>
             <div className="loading">
               <h3>Loading</h3>
@@ -145,10 +144,10 @@ class ContentWrapper extends React.Component {
         ) : (
           <React.Fragment>
             <div className="content-wrapper">
-              {!this.state.detailView ? (
+              {!detailView ? (
                 <React.Fragment>
                   <div className="color-list">
-                    {this.state.currentColors.map((color, index) => (
+                    {currentColors.map((color, index) => (
                       <ColorSwatch
                         key={index}
                         colorData={color}
@@ -157,7 +156,7 @@ class ContentWrapper extends React.Component {
                     ))}
                   </div>
                   <Paginator
-                    totalColors={this.state.allColorsArr.length}
+                    totalColors={allColorsArr.length}
                     pageLimit={12}
                     pageNeighbors={1}
                     onPageChange={this.onPageChange}
@@ -165,9 +164,9 @@ class ContentWrapper extends React.Component {
                 </React.Fragment>
               ) : (
                 <DetailView
-                  detailColor={this.state.detailColor}
+                  detailColor={detailColor}
                   clearDetailView={this.clearDetailView}
-                  detailList={this.state.detailList}
+                  detailList={detailList}
                   detailView={this.selectDetailView}
                 />
               )}
