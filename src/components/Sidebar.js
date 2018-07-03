@@ -7,10 +7,6 @@ class Sidebar extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
-
-    this.selectRandomColor = this.selectRandomColor.bind(this);
-    this.setColorGroupNames = this.setColorGroupNames.bind(this);
-    this.selectColorGroup = this.selectColorGroup.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -19,18 +15,18 @@ class Sidebar extends React.PureComponent {
     }
   }
 
-  selectRandomColor() {
+  selectRandomColor = () => {
     const colorArr = this.props.colorIndex;
     const randomColor = colorArr[Math.floor(Math.random() * colorArr.length)];
     this.props.selectRandomColor(randomColor);
-  }
+  };
 
-  selectColorGroup(color) {
+  selectColorGroup = color => {
     const groupArr = this.props.colorGroups[color];
     this.props.selectRandomColor(groupArr[10]);
-  }
+  };
 
-  setColorGroupNames(colorGroups) {
+  setColorGroupNames = colorGroups => {
     const colorNamesArr = [];
     for (let color in colorGroups) {
       colorNamesArr.push(color);
@@ -38,31 +34,38 @@ class Sidebar extends React.PureComponent {
     this.setState(prevState => {
       return { ...prevState, colorNames: colorNamesArr };
     });
-  }
+  };
 
   render() {
+    const { colorNames } = this.state;
+    const { colorIndex } = this.props;
+
+    let colorList = null;
+    if (colorNames) {
+      colorList = colorNames.map((color, index) => (
+        <button
+          key={index}
+          className="group-color-button"
+          onClick={() => {
+            this.selectColorGroup(color);
+          }}
+        >
+          {color}
+        </button>
+      ));
+    }
+
     return (
       <React.Fragment>
         <div className="sidebar">
           <button
             className="random-color-button"
             onClick={this.selectRandomColor}
-            disabled={!this.props.colorIndex}
+            disabled={!colorIndex}
           >
             Random Color
           </button>
-          {this.state.colorNames &&
-            this.state.colorNames.map((color, index) => (
-              <button
-                key={index}
-                className="group-color-button"
-                onClick={() => {
-                  this.selectColorGroup(color);
-                }}
-              >
-                {color}
-              </button>
-            ))}
+          {colorList}
         </div>
       </React.Fragment>
     );

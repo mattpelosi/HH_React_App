@@ -1,6 +1,8 @@
 import React from "react";
-import '../css/paginator.css'
+import "../css/paginator.css";
 
+const LEFT_PAGE = "LEFT";
+const RIGHT_PAGE = "RIGHT";
 class Paginator extends React.Component {
   constructor(props) {
     super(props);
@@ -10,30 +12,21 @@ class Paginator extends React.Component {
 
     this.pageLimit = typeof pageLimit === "number" ? pageLimit : 30;
     this.totalColors = typeof totalColors === "number" ? totalColors : 0;
+
+    this.totalPages = Math.ceil(this.totalColors / this.pageLimit);
+
     this.pageNeighbors =
       typeof pageNeighbors === "number"
         ? Math.max(0, Math.min(pageNeighbors, 2))
         : 0;
-    this.totalPages = Math.ceil(this.totalColors / this.pageLimit);
-
-    this.LEFT_PAGE = "LEFT";
-    this.RIGHT_PAGE = "RIGHT";
-
-    this.goToPage = this.goToPage.bind(this);
-    this.range = this.range.bind(this);
-
-    this.getPageNumbers = this.getPageNumbers.bind(this);
-
-    this.handleClick = this.handleClick.bind(this);
-    this.handlePageRight = this.handlePageRight.bind(this);
-    this.handlePageLeft = this.handlePageLeft.bind(this);
+  
   }
 
   componentDidMount() {
     this.goToPage(1);
   }
 
-  goToPage(page) {
+  goToPage = page => {
     const currentPage = Math.max(0, Math.min(page, this.totalPages));
 
     const paginatorData = {
@@ -45,21 +38,21 @@ class Paginator extends React.Component {
       { currentPage: currentPage },
       this.props.onPageChange(paginatorData)
     );
-  }
+  };
 
-  handleClick(page) {
+  handleClick = page => {
     this.goToPage(page);
-  }
+  };
 
-  handlePageLeft() {
+  handlePageLeft = () => {
     this.goToPage(this.state.currentPage - this.pageNeighbors * 2 - 1);
-  }
+  };
 
-  handlePageRight() {
+  handlePageRight = () => {
     this.goToPage(this.state.currentPage + this.pageNeighbors * 2 + 1);
-  }
+  };
 
-  range(from, to, step = 1) {
+  range = (from, to, step = 1) => {
     let i = from;
     const range = [];
     while (i <= to) {
@@ -67,9 +60,9 @@ class Paginator extends React.Component {
       i += step;
     }
     return range;
-  }
+  };
 
-  getPageNumbers() {
+  getPageNumbers = () => {
     const totalPages = this.totalPages;
     const currentPage = this.state.currentPage;
     const pageNeighbors = this.pageNeighbors;
@@ -90,17 +83,17 @@ class Paginator extends React.Component {
       switch (true) {
         case hasLeftSpill && !hasRightSpill: {
           const extraPages = this.range(startPage - spillOffset, startPage - 1);
-          pages = [this.LEFT_PAGE, ...extraPages, ...pages];
+          pages = [LEFT_PAGE, ...extraPages, ...pages];
           break;
         }
         case !hasLeftSpill && hasRightSpill: {
           const extraPages = this.range(endPage + 1, endPage + spillOffset);
-          pages = [...pages, ...extraPages, this.RIGHT_PAGE];
+          pages = [...pages, ...extraPages, RIGHT_PAGE];
           break;
         }
         case hasLeftSpill && hasRightSpill:
         default: {
-          pages = [this.LEFT_PAGE, ...pages, this.RIGHT_PAGE];
+          pages = [LEFT_PAGE, ...pages, RIGHT_PAGE];
           break;
         }
       }
@@ -109,7 +102,7 @@ class Paginator extends React.Component {
     }
 
     return this.range(1, totalPages);
-  }
+  };
 
   render() {
     if (!this.totalColors || this.totalPages === 1) return null;
@@ -123,7 +116,7 @@ class Paginator extends React.Component {
         <div>
           <ul className="paginator">
             {pages.map((page, index) => {
-              if (page === this.LEFT_PAGE)
+              if (page === LEFT_PAGE)
                 return (
                   <li key={index} className="page-item">
                     <a className="page-link" onClick={this.handlePageLeft}>
@@ -132,7 +125,7 @@ class Paginator extends React.Component {
                   </li>
                 );
 
-              if (page === this.RIGHT_PAGE)
+              if (page === RIGHT_PAGE)
                 return (
                   <li key={index} className="page-item">
                     <a className="page-link" onClick={this.handlePageRight}>
@@ -144,7 +137,9 @@ class Paginator extends React.Component {
               return (
                 <li
                   key={index}
-                  className={`page-item${currentPage === page ? " active" : ""}`}
+                  className={`page-item${
+                    currentPage === page ? " active" : ""
+                  }`}
                 >
                   <a
                     className="page-link"
@@ -161,7 +156,5 @@ class Paginator extends React.Component {
     );
   }
 }
-
-// Paginator.PropTypes = {};
 
 export default Paginator;

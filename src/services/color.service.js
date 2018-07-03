@@ -5,7 +5,7 @@ export function read() {
     method: "GET",
     headers: {}
   };
-  return axiosInstance(`https://young-savannah-71739.herokuapp.com/colors`, config)
+  return axiosInstance(`http://localhost:5000/colors` || `https://young-savannah-71739.herokuapp.com/colors`, config)
     .then(responseSuccessHandler)
     .catch(responseErrorHandler);
 }
@@ -16,7 +16,7 @@ export function colorScraper() {
     headers: {}
   };
 
-  return axiosInstance(`https://young-savannah-71739.herokuapp.com/scrape-colors`, config)
+  return axiosInstance(`http://localhost:5000/scrape-colors` || `https://young-savannah-71739.herokuapp.com/scrape-colors`, config)
     .then(responseSuccessHandler)
     .catch(responseErrorHandler);
 }
