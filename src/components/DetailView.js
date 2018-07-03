@@ -3,10 +3,6 @@ import ColorSwatch from "./ColorSwatch";
 import "../css/detail.view.css";
 
 class DetailView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
 
   componentDidMount() {
     this.scrollToSelectedItem();
